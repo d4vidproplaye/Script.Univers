@@ -1,28 +1,19 @@
---> Services <--
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
-
---> LocalPlayerPlayer Varaiables <--
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 local playerCharacter = player.Character
 local playerHumanoid = playerCharacter:WaitForChild("Humanoid")
 local playerHumanoidRootPart = playerCharacter:WaitForChild("HumanoidRootPart")
-
---> Tpwalk Varaiables <--
 local ToggleTpwalk = false
 local TpwalkValue = 1
 local TpwalkNegativeValues = false
 local TpwalkConnection = nil
-
---> Dragging Varaiables <--
 local ThirdTextButtonMouseButton1Down = 0
 local FourthTextButtonMouseButton1Down = 0
 local FourthTextButtonToggled = false
-
---> Creates a ScreenGui <--
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = playerGui
 ScreenGui.Name = "Tpwalk V4"
@@ -31,8 +22,6 @@ ScreenGui.DisplayOrder = 999
 ScreenGui.Enabled = true 
 ScreenGui.IgnoreGuiInset = false
 ScreenGui.AutoLocalize = true
-
---> Creates a Frame Within ScreenGui <--
 local Frame = Instance.new("Frame")
 Frame.Parent = ScreenGui
 Frame.Name = "Container"
@@ -52,13 +41,9 @@ Frame.Rotation = 0
 Frame.AutoLocalize = true
 Frame.LayoutOrder = 0
 Frame.SizeConstraint = Enum.SizeConstraint.RelativeXY
-
---> Creates a UICorner Within Frame <--
 local FrameUICorner = Instance.new("UICorner")
 FrameUICorner.Parent = Frame
 FrameUICorner.CornerRadius = UDim.new(0.1, 0)
-
---> Creates a TextLabel Within Frame <--
 local TextLabel = Instance.new("TextLabel")
 TextLabel.Parent = Frame
 TextLabel.Name = "Title"
@@ -92,8 +77,6 @@ TextLabel.Selectable = true
 TextLabel.SizeConstraint = Enum.SizeConstraint.RelativeXY
 TextLabel.Rotation = 0
 TextLabel.AutoLocalize = true
-
---> Creates a Second TextLabel Within Frame <--
 local SecondTextLabel = Instance.new("TextLabel")
 SecondTextLabel.Parent = Frame
 SecondTextLabel.Name = "Tpwalk Value Label"
@@ -127,13 +110,9 @@ SecondTextLabel.Selectable = true
 SecondTextLabel.SizeConstraint = Enum.SizeConstraint.RelativeXY
 SecondTextLabel.Rotation = 0
 SecondTextLabel.AutoLocalize = true
-
---> Creates a UICorner Within Second TextLabel <--
 local SecondTextLabelUICorner = Instance.new("UICorner")
 SecondTextLabelUICorner.Parent = SecondTextLabel
 SecondTextLabelUICorner.CornerRadius = UDim.new(0.25, 0)
-
---> Creates a Third TextLabel Within Frame <--
 local ThirdTextLabel = Instance.new("TextLabel")
 ThirdTextLabel.Parent = Frame
 ThirdTextLabel.Name = "Discord Link"
@@ -167,16 +146,12 @@ ThirdTextLabel.Selectable = true
 ThirdTextLabel.SizeConstraint = Enum.SizeConstraint.RelativeXY
 ThirdTextLabel.Rotation = 0
 ThirdTextLabel.AutoLocalize = true
-
---> Creates a Rainbow Text Color For Third TextLabel <--
 local hue = 0
 RunService.Heartbeat:Connect(function(deltaTime)
     hue = (hue + deltaTime * 0.1) % 1
     local color = Color3.fromHSV(hue, 1, 1)
     ThirdTextLabel.TextColor3 = color
 end)
-
---> Creates a TextBox Within Frame <--
 local TextBox = Instance.new("TextBox")
 TextBox.Parent = Frame
 TextBox.Name = "Tpwalk Value Changer"
@@ -211,13 +186,9 @@ TextBox.LayoutOrder = 1
 TextBox.MaxVisibleGraphemes = -1
 TextBox.RichText = false
 TextBox.Rotation = 0
-
---> Creates a UICorner Within TextBox <--
 local TextBoxUICorner = Instance.new("UICorner")
 TextBoxUICorner.Parent = TextBox
 TextBoxUICorner.CornerRadius = UDim.new(0.25, 0)
-
---> Creates a TextButton Within Frame <--
 local TextButton = Instance.new("TextButton")
 TextButton.Parent = Frame
 TextButton.Name = "Tpwalk Enabler"
@@ -241,13 +212,9 @@ TextButton.ZIndex = 999
 TextButton.Active = true
 TextButton.Selectable = true
 TextButton.Style = Enum.ButtonStyle.Custom
-
---> Creates a UICorner Within TextButton <--
 local TextButtonUICorner = Instance.new("UICorner")
 TextButtonUICorner.Parent = TextButton
 TextButtonUICorner.CornerRadius = UDim.new(0.25, 0)
-
---> Creates a Second TextButton Within Frame <--
 local SecondTextButton = Instance.new("TextButton")
 SecondTextButton.Parent = Frame
 SecondTextButton.Name = "Negative Value Enabler"
@@ -276,8 +243,6 @@ SecondTextButton.Style = Enum.ButtonStyle.Custom
 local SecondTextButtonUICorner = Instance.new("UICorner")
 SecondTextButtonUICorner.Parent = SecondTextButton
 SecondTextButtonUICorner.CornerRadius = UDim.new(0.25, 0)
-
---> Creates a Third TextButton Within Frame <--
 local ThirdTextButton = Instance.new("TextButton")
 ThirdTextButton.Parent = ScreenGui
 ThirdTextButton.Name = "Tpwalk ScreenGui Destroyer"
@@ -307,8 +272,6 @@ ThirdTextButton.Style = Enum.ButtonStyle.Custom
 local ThirdTextButtonUICorner = Instance.new("UICorner")
 ThirdTextButtonUICorner.Parent = ThirdTextButton
 ThirdTextButtonUICorner.CornerRadius = UDim.new(1, 0)
-
---> Creates a Fourth TextButton Within Frame <--
 local FourthTextButton = Instance.new("TextButton")
 FourthTextButton.Parent = ScreenGui
 FourthTextButton.Name = "Tpwalk ScreenGui Hider"
@@ -333,27 +296,19 @@ FourthTextButton.Active = true
 FourthTextButton.Draggable = true
 FourthTextButton.Selectable = true
 FourthTextButton.Style = Enum.ButtonStyle.Custom
-
---> Creates a UICorner Within Fourth TextButton <-- 
 local FourthTextButtonUICorner = Instance.new("UICorner")
 FourthTextButtonUICorner.Parent = FourthTextButton
 FourthTextButtonUICorner.CornerRadius = UDim.new(1, 0)
-
---> Creates a Blur Instance Within Frame TweenService <--
 local Blur = Instance.new("BlurEffect")
 Blur.Name = "Blur Screen Effect"
 Blur.Enabled = true 
 Blur.Size = 0
 Blur.Parent = Lighting
-
---> Event Handler When The Player Respawns <--
 player.CharacterAdded:Connect(function(NewCharacter)
     playerCharacter = NewCharacter
     playerHumanoid = playerCharacter:WaitForChild("Humanoid")
     playerHumanoidRootPart = playerCharacter:WaitForChild("HumanoidRootPart")
 end)
-
---> Event Handler For Textbox Lost Focus <--
 TextBox.FocusLost:Connect(function()
     local textInput = TextBox.Text
     local inputValue = tonumber(textInput)
